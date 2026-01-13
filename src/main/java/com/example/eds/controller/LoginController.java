@@ -34,6 +34,7 @@ public class LoginController {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
+        user.setRole("ROLE_USER");
 
         userRepository.save(user);
 

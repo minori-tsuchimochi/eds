@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>社員情報管理システム</h1>
+
+<div sec:authorize="hasRole('ADMIN')">
+    <h2>管理者ページ</h2>
+</div>
+
+<div sec:authorize="hasRole('USER')">
+    <h2>一般ユーザーページ</h2>
+</div>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">ログアウト</button>
+</form>
+
+
+</body>
+</html>
