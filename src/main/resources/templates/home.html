@@ -11,6 +11,13 @@
 
 <div sec:authorize="hasRole('ADMIN')">
     <h2>管理者ページ</h2>
+    <ul>
+        <li>
+            <a th:href="@{/admin/employees/register}">
+                社員新規登録
+            </a>
+        </li>
+    </ul>
 </div>
 
 <div sec:authorize="hasRole('USER')">
