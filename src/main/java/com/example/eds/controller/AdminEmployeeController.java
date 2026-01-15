@@ -1,7 +1,9 @@
 package com.example.eds.controller.admin;
 
-import com.example.eds.entity.*;
-import com.example.eds.repository.*;
+import com.example.eds.entity.Employee;
+import com.example.eds.repository.DepartmentRepository;
+import com.example.eds.repository.EmployeeRepository;
+import com.example.eds.repository.PositionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +20,17 @@ public class AdminEmployeeController {
     private final DepartmentRepository departmentRepository;
     private final PositionRepository positionRepository;
 
+    @GetMapping
+    public String list(Model model) {
+        model.addAttribute("employees", employeeRepository.findAll());
+        return "admin/employees/list";
+    }
+
     @GetMapping("/register")
     public String showRegister(Model model) {
         model.addAttribute("departments", departmentRepository.findAll());
         model.addAttribute("positions", positionRepository.findAll());
-        return "admin/employee/register";
+        return "admin/employees/register";
     }
 
     @PostMapping("/register")
@@ -46,6 +54,47 @@ public class AdminEmployeeController {
 
         employeeRepository.save(emp);
 
-        return "redirect:/admin/employees/register";
+        return "redirect:/admin/employees";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEdit(@PathVariable Long id, Model model) {
+        Employee emp = employeeRepository.findById(id).orElseThrow();
+        model.addAttribute("employee", emp);
+        model.addAttribute("departments", departmentRepository.findAll());
+        model.addAttribute("positions", positionRepository.findAll());
+        return "admin/employees/edit";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String update(
+            @PathVariable Long id,
+            @RequestParam String employeeNumber,
+            @RequestParam String name,
+            @RequestParam Long departmentId,
+            @RequestParam Long positionId,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String phone,
+            @RequestParam(required = false) String joinDate
+    ) {
+        Employee emp =employeeRepository.findById(id).orElseThrow();
+        emp.setEmployeeNumber(employeeNumber);
+        emp.setName(name);
+        emp.setDepartment(departmentRepository.findById(departmentId).orElseThrow());
+        emp.setPosition(positionRepository.findById(positionId).orElseThrow());
+        emp.setEmail(email);
+        emp.setPhone(phone);
+        if (joinDate != null && !joinDate.isBlank()) {
+            emp.setJoinDate(LocalDate.parse(joinDate));
+        }
+        employeeRepository.save(emp);
+
+        return "redirect:/admin/employees";
+    }
+
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id) {
+        employeeRepository.deleteById(id);
+        return "redirect:/admin/employees";
     }
 }

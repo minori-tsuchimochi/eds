@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>社員情報編集</title>
+</head>
+<body>
+
+<h1>社員情報編集</h1>
+
+<form th:action="@{/admin/employees/{id}/edit(id=${employee.id})}" method="post">
+    <div>
+        <label>社員番号</label>
+        <input type="text" name="employeeNumber" th:value="${employee.employeeNumber}" required>
+    </div>
+
+    <div>
+        <label>氏名</label>
+        <input type="text" name="name" th:value="${employee.name}" required>
+    </div>
+
+    <div>
+        <label>部署</label>
+        <select name="departmentId">
+            <option th:each="d : ${departments}"
+                    th:value="${d.id}"
+                    th:text="${d.departmentName}"
+                    th:selected="${d.id == employee.department.id}">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label>役職</label>
+        <select name="positionId">
+            <option th:each="p : ${positions}"
+                    th:value="${p.id}"
+                    th:text="${p.positionName}"
+                    th:selected="${p.id == employee.position.id}">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label>メール</label>
+        <input type="email" name="email" th:value="${employee.email}">
+    </div>
+
+    <div>
+        <label>電話番号</label>
+        <input type="text" name="phone" th:value="${employee.phone}">
+    </div>
+
+    <div>
+        <label>入社日</label>
+        <input type="date" name="joinDate" th:value="${employee.joinDate}">
+    </div>
+
+    <button type="submit">更新</button>
+
+</form>
+
+<a th:href="@{/admin/employees}">社員一覧</a>
+
+</body>
+</html>

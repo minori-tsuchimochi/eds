@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>社員一覧</title>
+</head>
+<body>
+
+<h1>社員一覧</h1>
+
+<table border="1">
+    <tr>
+        <th>社員番号</th>
+        <th>氏名</th>
+        <th>部署</th>
+        <th>役職</th>
+        <th>操作</th>
+    </tr>
+
+    <tr th:each="emp : ${employees}">
+        <td th:text="${emp.employeeNumber}"></td>
+        <td th:text="${emp.name}"></td>
+        <td th:text="${emp.department.departmentName}"></td>
+        <td th:text="${emp.position.positionName}"></td>
+        <td>
+            <a th:href="@{/admin/employees/{id}/edit(id=${emp.id})}">編集</a>
+
+            <form th:action="@{/admin/employees/{id}/delete(id=${emp.id})}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('削除しますか？')">削除</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<br>
+<a th:href="@{/admin/employees/register}">社員新規登録</a>
+
+<br>
+<a th:href="@{/}">Home</a>
+
+</body>
+</html>
