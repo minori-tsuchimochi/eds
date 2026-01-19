@@ -31,6 +31,9 @@ public class AdminEmployeeController {
 
         model.addAttribute("departments", departmentRepository.findAll());
         model.addAttribute("positions", positionRepository.findAll());
+        model.addAttribute("departmentId", departmentId);
+        model.addAttribute("positionId", positionId);
+        model.addAttribute("keyword", keyword);
         return "admin/employees/list";
     }
 
