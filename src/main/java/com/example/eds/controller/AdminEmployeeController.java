@@ -21,8 +21,16 @@ public class AdminEmployeeController {
     private final PositionRepository positionRepository;
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("employees", employeeRepository.findAll());
+    public String list(
+            @RequestParam(required = false) Long departmentId,
+            @RequestParam(required = false) Long positionId,
+            @RequestParam(required = false) String keyword,
+            Model model) {
+        model.addAttribute("employees", employeeRepository.search(departmentId, positionId, keyword)
+        );
+
+        model.addAttribute("departments", departmentRepository.findAll());
+        model.addAttribute("positions", positionRepository.findAll());
         return "admin/employees/list";
     }
 
