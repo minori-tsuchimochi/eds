@@ -5,6 +5,8 @@ import com.example.eds.repository.DepartmentRepository;
 import com.example.eds.repository.EmployeeRepository;
 import com.example.eds.repository.PositionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +27,15 @@ public class AdminEmployeeController {
             @RequestParam(required = false) Long departmentId,
             @RequestParam(required = false) Long positionId,
             @RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "0") int page,
             Model model) {
-        model.addAttribute("employees", employeeRepository.search(departmentId, positionId, keyword)
-        );
+        int size = 5;
+        PageRequest pageable = PageRequest.of(page, size);
+        Page<Employee> employeePage = employeeRepository.search(departmentId, positionId, keyword, pageable);
 
+        model.addAttribute("employees", employeePage.getContent());
+        model.addAttribute("employeePage", employeePage);
+        model.addAttribute("currentPage", page);
         model.addAttribute("departments", departmentRepository.findAll());
         model.addAttribute("positions", positionRepository.findAll());
         model.addAttribute("departmentId", departmentId);
@@ -88,7 +95,7 @@ public class AdminEmployeeController {
             @RequestParam(required = false) String phone,
             @RequestParam(required = false) String joinDate
     ) {
-        Employee emp =employeeRepository.findById(id).orElseThrow();
+        Employee emp = employeeRepository.findById(id).orElseThrow();
         emp.setEmployeeNumber(employeeNumber);
         emp.setName(name);
         emp.setDepartment(departmentRepository.findById(departmentId).orElseThrow());

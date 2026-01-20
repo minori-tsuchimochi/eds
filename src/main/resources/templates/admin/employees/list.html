@@ -59,6 +59,42 @@
     </tr>
 </table>
 
+<div>
+    <span th:if="${employeePage.hasPrevious()}">
+        <a th:href="@{/admin/employees(
+             page=${currentPage - 1},
+             departmentId=${departmentId},
+             positionId=${positionId},
+             keyword=${keyword}
+        )}">前へ</a>
+    </span>
+
+    <span th:each="i : ${#numbers.sequence(0, employeePage.totalPages - 1)}">
+        <span th:if="${i == currentPage}">
+            <strong th:text="${i + 1}"></strong>
+        </span>
+        <span th:if="${i != currentPage}">
+            <a th:href="@{/admin/employees(
+                 page=${i},
+                 departmentId=${departmentId},
+                 positionId=${positionId},
+                 keyword=${keyword}
+            )}"
+               th:text="${i + 1}"></a>
+        </span>
+        &nbsp;
+    </span>
+
+    <span th:if="${employeePage.hasNext()}">
+        <a th:href="@{/admin/employees(
+             page=${currentPage + 1},
+             departmentId=${departmentId},
+             positionId=${positionId},
+             keyword=${keyword}
+        )}">次へ</a>
+    </span>
+</div>
+
 <br>
 <a th:href="@{/admin/employees/register}">社員新規登録</a>
 
