@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>社員一覧</title>
+</head>
+<body>
+
+<h1>社員一覧</h1>
+
+<a th:if="${keyword != null}"
+   th:href="@{/user/employees}">検索条件をクリア</a>
+
+
+<form method="get" th:action="@{/user/employees}">
+    <input type="text" name="keyword" placeholder="名前で検索" th:value="${keyword}">
+    <button type="submit">検索</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>社員番号</th>
+        <th>氏名</th>
+        <th>部署</th>
+        <th>役職</th>
+    </tr>
+    <tr th:each="emp : ${employees.content}">
+        <td th:text="${emp.employeeNumber}"></td>
+        <td th:text="${emp.name}"></td>
+        <td th:text="${emp.department.departmentName}"></td>
+        <td th:text="${emp.position.positionName}"></td>
+    </tr>
+</table>
+
+<div>
+    <a th:if="${employees.hasPrevious()}"
+       th:href="@{/user/employees(page=${employees.number - 1}, keyword=${keyword})}">前へ</a>
+
+    <span th:text="${employees.number +1}"></span>
+
+    <a th:if="${employees.hasNext()}"
+       th:href="@{/user/employees(page=${employees.number +1}, keyword=${keyword})}">次へ</a>
+</div>
+
+<br>
+<a th:href="@{/}">HOME</a>
+
+</body>
+</html>

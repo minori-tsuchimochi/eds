@@ -23,6 +23,11 @@
 
 <div sec:authorize="hasRole('USER')">
     <h2>一般ユーザーページ</h2>
+    <ul>
+        <li>
+            <a th:href="@{/user/employees}">社員一覧</a>
+        </li>
+    </ul>
 </div>
 
 <form th:action="@{/logout}" method="post">
