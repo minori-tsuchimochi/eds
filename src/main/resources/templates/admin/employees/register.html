@@ -8,21 +8,23 @@
 
 <h1>社員新規登録</h1>
 
-<form th:action="@{/admin/employees/register}" method="post">
+<form th:action="@{/admin/employees/register}" th:object="${employee}" method="post">
 
     <div>
         <label>社員番号</label><br>
-        <input type="text" name="employeeNumber" required>
+        <input type="text" th:field="*{employeeNumber}">
+        <div th:if="${#fields.hasErrors('employeeNumber')}" th:errors="*{employeeNumber}"></div>
     </div>
 
     <div>
         <label>氏名</label><br>
-        <input type="text" name="name" required>
+        <input type="text" th:field="*{name}">
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     </div>
 
     <div>
         <label>部署</label><br>
-        <select name="departmentId" required>
+        <select th:field="*{department.id}">
             <option value="">-- 選択してください --</option>
             <option th:each="d : ${departments}"
                     th:value="${d.id}"
@@ -33,7 +35,7 @@
 
     <div>
         <label>役職</label><br>
-        <select name="positionId" required>
+        <select th:field="*{position.id}">
             <option value="">-- 選択してください --</option>
             <option th:each="p : ${positions}"
                     th:value="${p.id}"
@@ -44,17 +46,18 @@
 
     <div>
         <label>メールアドレス</label><br>
-        <input type="email" name="email">
+        <input type="email" th:field="*{email}">
     </div>
 
     <div>
         <label>電話番号</label><br>
-        <input type="text" name="phone">
+        <input type="text" th:field="*{phone}">
     </div>
 
     <div>
         <label>入社日</label><br>
-        <input type="date" name="joinDate" required>
+        <input type="date" th:field="*{joinDate}">
+        <div th:if="${#fields.hasErrors('joinDate')}" th:errors="*{joinDate}"></div>
     </div>
 
     <br>

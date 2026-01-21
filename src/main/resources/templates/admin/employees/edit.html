@@ -8,52 +8,64 @@
 
 <h1>社員情報編集</h1>
 
-<form th:action="@{/admin/employees/{id}/edit(id=${employee.id})}" method="post">
+<form th:action="@{/admin/employees/{id}/edit(id=${employee.id})}"
+      th:object="${employee}"
+      method="post">
     <div>
         <label>社員番号</label>
-        <input type="text" name="employeeNumber" th:value="${employee.employeeNumber}" required>
+        <input type="text" th:field="*{employeeNumber}">
+        <div th:if="${#fields.hasErrors('employeeNumber')}"
+             th:errors="*{employeeNumber}"></div>
     </div>
 
     <div>
         <label>氏名</label>
-        <input type="text" name="name" th:value="${employee.name}" required>
+        <input type="text" th:field="*{name}">
+        <div th:if="${#fields.hasErrors('name')}"
+             th:errors="*{name}"></div>
     </div>
 
     <div>
         <label>部署</label>
-        <select name="departmentId">
+        <select th:field="*{department.id}">
+            <option value="">-- 選択してください --</option>
             <option th:each="d : ${departments}"
                     th:value="${d.id}"
-                    th:text="${d.departmentName}"
-                    th:selected="${d.id == employee.department.id}">
+                    th:text="${d.departmentName}">
             </option>
         </select>
+        <div th:if="${#fields.hasErrors('department')}"
+             th:errors="*{department}"></div>
     </div>
 
     <div>
         <label>役職</label>
-        <select name="positionId">
+        <select th:field="*{position.id}">
+            <option value="">-- 選択してください --</option>
             <option th:each="p : ${positions}"
                     th:value="${p.id}"
-                    th:text="${p.positionName}"
-                    th:selected="${p.id == employee.position.id}">
+                    th:text="${p.positionName}">
             </option>
         </select>
+        <div th:if="${#fields.hasErrors('position')}"
+             th:errors="*{position}"></div>
     </div>
 
     <div>
         <label>メール</label>
-        <input type="email" name="email" th:value="${employee.email}">
+        <input type="email" th:field="*{email}">
     </div>
 
     <div>
         <label>電話番号</label>
-        <input type="text" name="phone" th:value="${employee.phone}">
+        <input type="text" th:field="*{phone}">
     </div>
 
     <div>
         <label>入社日</label>
-        <input type="date" name="joinDate" th:value="${employee.joinDate}">
+        <input type="date" th:field="*{joinDate}">
+        <div th:if="${#fields.hasErrors('joinDate')}"
+             th:errors="*{joinDate}"></div>
     </div>
 
     <button type="submit">更新</button>

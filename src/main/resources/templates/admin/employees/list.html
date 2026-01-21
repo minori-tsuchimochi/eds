@@ -8,7 +8,7 @@
 
 <h1>社員一覧</h1>
 
-<a th:if="${param.keyword != null or param.departmentId != null or param.positionId != null}"
+<a th:if="${(keyword != null and !keyword.isEmpty()) or departmentId != null or positionId != null}"
    th:href="@{/admin/employees}">検索条件をクリア</a>
 
 <form method="get" th:action="@{/admin/employees}">
