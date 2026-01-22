@@ -17,6 +17,7 @@ public class Employee {
     private Long id;
 
     @NotBlank
+    @Pattern(regexp = "\\d+", message = "社員番号は数字のみで入力してください。")
     @Column(nullable = false, unique = true)
     private String employeeNumber;
 
@@ -37,6 +38,7 @@ public class Employee {
     @Email
     private String email;
 
+    @Pattern(regexp = "\\d*", message = "電話番号は数字のみで入力してください。")
     private String phone;
 
     @NotNull

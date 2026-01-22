@@ -12,7 +12,10 @@
 
     <div>
         <label>社員番号</label><br>
-        <input type="text" th:field="*{employeeNumber}">
+        <input type="text"
+               th:field="*{employeeNumber}"
+               pattern="\d*"
+               inputmode="numeric">
         <div th:if="${#fields.hasErrors('employeeNumber')}" th:errors="*{employeeNumber}"></div>
     </div>
 
@@ -24,7 +27,7 @@
 
     <div>
         <label>部署</label><br>
-        <select th:field="*{department.id}">
+        <select th:field="*{department.id}" required>
             <option value="">-- 選択してください --</option>
             <option th:each="d : ${departments}"
                     th:value="${d.id}"
@@ -35,7 +38,7 @@
 
     <div>
         <label>役職</label><br>
-        <select th:field="*{position.id}">
+        <select th:field="*{position.id}" required>
             <option value="">-- 選択してください --</option>
             <option th:each="p : ${positions}"
                     th:value="${p.id}"
@@ -51,7 +54,12 @@
 
     <div>
         <label>電話番号</label><br>
-        <input type="text" th:field="*{phone}">
+        <input type="text"
+               th:field="*{phone}"
+               pattern="\d*"
+               inputmode="numeric">
+        <div th:if="${#fields.hasErrors('phone')}"
+             th:errors="*{phone}"></div>
     </div>
 
     <div>
