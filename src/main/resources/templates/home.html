@@ -9,7 +9,7 @@
 
 <h1>社員情報管理システム</h1>
 
-<div sec:authorize="hasRole('ADMIN')">
+<div sec:authorize="hasAuthority('ADMIN')">
     <h2>管理者ページ</h2>
     <ul>
         <li>
@@ -21,7 +21,7 @@
     </ul>
 </div>
 
-<div sec:authorize="hasRole('USER')">
+<div sec:authorize="hasAuthority('USER')">
     <h2>一般ユーザーページ</h2>
     <ul>
         <li>

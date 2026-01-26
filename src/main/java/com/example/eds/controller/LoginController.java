@@ -24,20 +24,20 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String registerForm() {
-        return "register";
-    }
+    //@GetMapping("/register")
+    //public String registerForm() {
+        //return "register";
+    //}
 
-    @PostMapping("/register")
-    public String register(@RequestParam String username, @RequestParam String password) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRole("ROLE_USER");
+    //@PostMapping("/register")
+    //public String register(@RequestParam String username, @RequestParam String password) {
+        //User user = new User();
+        //user.setUsername(username);
+        //user.setPassword(passwordEncoder.encode(password));
+        //user.setRole("ROLE_USER");
 
-        userRepository.save(user);
+        //userRepository.save(user);
 
-        return "redirect:/login";
-    }
+        //return "redirect:/login";
+    //}
 }
